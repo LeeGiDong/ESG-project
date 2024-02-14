@@ -1,9 +1,8 @@
 library(rvest)
 # 경로 설정 
-dirname <- "linux_master_2"
+dirname <- "ESG보고서"
 # 폴더 생성
-# dir.create(dirname)
-
+dir.create(dirname)
 
 for(page_num in 1:16) {
   defualt_url <- "https://ksaesg.or.kr/p_base.php?action=h_report_04&board_id=&s_text=&s_category=&page="
@@ -24,6 +23,12 @@ for(page_num in 1:16) {
   # na 제거
   lm_2_file_url <- lm_2_file_url[complete.cases(lm_2_file_url)]
   lm_2_file_url <- paste0("https://ksaesg.or.kr/",lm_2_file_url)
+  
+  if(FALSE){
+    lm_2_file_url_tmp = lm_2_file_url
+    lm_2_file_url = lm_2_file_url_tmp[23:length(lm_2_file_url_tmp)]
+  }
+  
   # 각 Url 로 접근 하여 파일을 뽑아오기
   for(for_url in lm_2_file_url) {
     
@@ -38,12 +43,11 @@ for(page_num in 1:16) {
       html_nodes(".table") %>% 
       html_nodes("a") %>% 
       html_text()
+    file_name = gsub("/", "_", file_name)
+    
     # 파일 다운로드
-      destfile_name <- paste0(getwd(),"/",dirname,"/",file_name)
-      download.file(paste0("https://ksaesg.or.kr/",file_url),destfile = paste0(destfile_name, ".pdf"),mode = "wb")
-      
-# 위에서 쓴 for문 닫기
-   } 
+    destfile_name <- paste0(getwd(),"/",dirname,"/",file_name)
+    download.file(paste0("https://ksaesg.or.kr/",file_url),destfile = paste0(destfile_name, ".pdf"),mode = "wb")
+    
+  } 
 } 
-
-
