@@ -40,7 +40,7 @@ for(page_num in 1:16) {
       html_text()
     # 파일 다운로드
       destfile_name <- paste0(getwd(),"/",dirname,"/",file_name)
-      download.file(paste0("https://ksaesg.or.kr/",file_url),destfile = paste0(destfile_name, ".pdf"))
+      download.file(paste0("https://ksaesg.or.kr/",file_url),destfile = paste0(destfile_name, ".pdf"),mode = "wb")
       
 # 위에서 쓴 for문 닫기
    } 
